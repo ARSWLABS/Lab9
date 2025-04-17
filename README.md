@@ -30,11 +30,11 @@ Resultado:
 
 En esta parte lo que hicimos fue crear una maquina virtual tal cual como nos pide la imagen
 
-![](imagenes/part1/1.png)
+![](images/part1/1.png)
 
 maquina realizada:
 
-![Imagen:3][imagenes/part1/1.1.png]
+![](images/part1/1.1.png)
 
 2. Para conectarse a la VM use el siguiente comando, donde las `x` las debe remplazar por la IP de su propia VM (Revise la sección "Connect" de la virtual machine creada para tener una guía más detallada).
 
@@ -42,14 +42,14 @@ maquina realizada:
 
 En este paso tocaba conectarnos a la maquina virtual:
 
-![Realizado-2](imagenes/part1/4.png)
+![](images/part1/4.png)
 
 
 3. Instale node, para ello siga la sección *Installing Node.js and npm using NVM* que encontrará en este [enlace](https://linuxize.com/post/how-to-install-node-js-on-ubuntu-18.04/).
 
 En este paso instalamos npm:
 
-![Realizado-3](imagenes/part1/5.png)
+![](images/part1/5.png)
 
 4. Para instalar la aplicación adjunta al Laboratorio, suba la carpeta `FibonacciApp` a un repositorio al cual tenga acceso y ejecute estos comandos dentro de la VM:
 
