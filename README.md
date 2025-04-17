@@ -353,6 +353,7 @@ newman run ARSW_LOAD-BALANCING_AZURE.postman_collection.json -e [ARSW_LOAD-BALAN
 * ¿Cuáles son los tipos de balanceadores de carga en Azure y en qué se diferencian?, ¿Qué es SKU, qué tipos hay y en qué se diferencian?, ¿Por qué el balanceador de carga necesita una IP pública?
 
 /RTA
+
 Tipos de balanceadores de carga en Azure:
 
 Azure Front Door:
@@ -370,21 +371,25 @@ Ofrece balanceo de carga en la capa 4 para tráfico TCP y UDP, con alta capacida
 * ¿Cuál es el propósito del *Backend Pool*?
 
 /RTA
+
 El backend pool tiene como finalidad agrupar recursos que atienden las solicitudes de los usuarios. Este conjunto se utiliza comúnmente para escalar el rendimiento de aplicaciones web o APIs, y también para mejorar su disponibilidad. Si uno de los recursos falla, otro dentro del grupo puede asumir su función, asegurando así la continuidad del servicio. Además, permite que la aplicación escale automáticamente según la demanda.
 
 * ¿Cuál es el propósito del *Health Probe*?
 
 /RTA
+
 El propósito de un Health Probe es monitorear el estado de los servicios para asegurar su disponibilidad y correcto funcionamiento. En sistemas distribuidos, envía solicitudes a las instancias de backend y evalúa sus respuestas. Si una instancia no responde adecuadamente, el balanceador de carga puede dejar de dirigirle tráfico de forma temporal, lo que contribuye a una escalabilidad eficiente y mejora el rendimiento del sistema.
 
 * ¿Cuál es el propósito de la *Load Balancing Rule*? ¿Qué tipos de sesión persistente existen, por qué esto es importante y cómo puede afectar la escalabilidad del sistema?.
 
 /RTA
+
 La función de la regla de balanceo de carga (Load Balancing Rule) es definir cómo se reparten las solicitudes de los usuarios entre los recursos disponibles en un backend pool. Estas reglas son clave para optimizar el rendimiento, garantizar la disponibilidad y fortalecer la seguridad de aplicaciones web y APIs.
 
 * ¿Qué es una *Virtual Network*? ¿Qué es una *Subnet*? ¿Para qué sirven los *address space* y *address range*?
 
 /RTA
+
 Azure Virtual Network (VNet) permite la comunicación segura entre diversos recursos de Azure, como máquinas virtuales, así como con Internet y redes locales. Esta red proporciona una conexión directa mediante la infraestructura troncal de Azure, asegurando un enrutamiento eficiente. Los recursos pueden implementarse directamente en una VNet o vincularse a ella usando puntos de conexión privados o de servicio.
 
 Una subred (subnet) es una partición lógica dentro de una red IP, utilizada para segmentar la red en bloques más pequeños. Esto facilita una mejor organización, gestión, seguridad y rendimiento de la red.
@@ -396,6 +401,7 @@ El rango de direcciones (address range) es una porción específica del espacio 
 * ¿Qué son las *Availability Zone* y por qué seleccionamos 3 diferentes zonas?. ¿Qué significa que una IP sea *zone-redundant*?
 
 /RTA
+
 En Azure, una Availability Zone (AZ) es un centro de datos físico y aislado dentro de una misma región, cada uno con su propia energía, refrigeración y red independientes. Esta separación garantiza que si una zona presenta fallos, las otras continúen operando con normalidad.
 
 Distribuir los recursos en tres zonas de disponibilidad distintas aumenta la tolerancia a fallos, ya que si una zona falla, los servicios en las otras dos seguirán funcionando, lo que mejora la continuidad y disponibilidad del servicio.
@@ -407,6 +413,7 @@ Estas IPs son clave para lograr alta disponibilidad, ya que permiten mantener en
 * ¿Cuál es el propósito del *Network Security Group*?
 
 /RTA
+
 En Azure, un Network Security Group (NSG) es un grupo de reglas de seguridad que se aplican a una subred de Azure. Las reglas de NSG controlan el tráfico de red que puede entrar y salir de la subred.
 
 Los NSG son una herramienta importante para la seguridad de la red en Azure. Pueden ayudar a proteger los recursos de Azure de ataques de red, como el tráfico malicioso o el tráfico no autorizado.
