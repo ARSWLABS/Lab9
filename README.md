@@ -246,21 +246,41 @@ Antes de continuar puede eliminar el grupo de recursos anterior para evitar gast
 
 ![](images/part2/part2-lb-create.png)
 
+Creacion del recuros:
+
+![](images/part2/parte2-1.png)
+
 2. A continuación cree un *Backend Pool*, guiese con la siguiente imágen.
 
 ![](images/part2/part2-lb-bp-create.png)
+
+BACKEND POOL:
+
+![](images/part2/parte2-2.png)
 
 3. A continuación cree un *Health Probe*, guiese con la siguiente imágen.
 
 ![](images/part2/part2-lb-hp-create.png)
 
+HEALTH PROBE:
+
+![](images/part2/parte2-3.png)
+
 4. A continuación cree un *Load Balancing Rule*, guiese con la siguiente imágen.
 
 ![](images/part2/part2-lb-lbr-create.png)
 
+LOAD BALANCING:
+
+![](images/part2/parte2-4.png)
+
 5. Cree una *Virtual Network* dentro del grupo de recursos, guiese con la siguiente imágen.
 
 ![](images/part2/part2-vn-create.png)
+
+VIRTUAL NETWORK:
+
+![](images/part2/parte2-5.png)
 
 #### Crear las maquinas virtuales (Nodos)
 
@@ -278,9 +298,17 @@ Ahora vamos a crear 3 VMs (VM1, VM2 y VM3) con direcciones IP públicas standar 
 
 ![](images/part2/part2-vm-create3.png)
 
+VM1
+
+![](images/part2/parte2-6.png)
+
 4. Ahora asignaremos esta VM a nuestro balanceador de carga, para ello siga la configuración de la siguiente imágen.
 
 ![](images/part2/part2-vm-create4.png)
+
+RESULTADO:
+
+![](images/part2/parte2-7.png)
 
 5. Finalmente debemos instalar la aplicación de Fibonacci en la VM. para ello puede ejecutar el conjunto de los siguientes comandos, cambiando el nombre de la VM por el correcto
 
@@ -323,12 +351,66 @@ newman run ARSW_LOAD-BALANCING_AZURE.postman_collection.json -e [ARSW_LOAD-BALAN
 **Preguntas**
 
 * ¿Cuáles son los tipos de balanceadores de carga en Azure y en qué se diferencian?, ¿Qué es SKU, qué tipos hay y en qué se diferencian?, ¿Por qué el balanceador de carga necesita una IP pública?
+
+/RTA
+Tipos de balanceadores de carga en Azure:
+
+Azure Front Door:
+Es un servicio de entrega de aplicaciones que ofrece balanceo de carga a nivel global y acelera el acceso a sitios web. Opera en la capa 7 del modelo OSI, brindando funcionalidades como terminación SSL, enrutamiento según rutas, conmutación por error rápida y almacenamiento en caché para mejorar el rendimiento y garantizar alta disponibilidad.
+
+Traffic Manager:
+Este balanceador funciona a nivel de DNS, distribuyendo el tráfico entre servicios en distintas regiones de Azure. Aunque proporciona alta disponibilidad y buena capacidad de respuesta, al operar en el nivel del dominio no puede reaccionar tan rápido como Azure Front Door ante fallos, debido al almacenamiento en caché de DNS y a los clientes que no respetan los tiempos de vida (TTL) del DNS.
+
+Application Gateway:
+Actúa como un controlador de entrega de aplicaciones con funciones de balanceo de carga en la capa 7. Es ideal para optimizar servidores web, ya que permite descargar la carga del proceso de terminación SSL desde los servidores hacia la puerta de enlace, mejorando el rendimiento general.
+
+Azure Load Balancer:
+Ofrece balanceo de carga en la capa 4 para tráfico TCP y UDP, con alta capacidad de procesamiento y baja latencia. Está diseñado para manejar millones de solicitudes por segundo y asegurar disponibilidad mediante redundancia zonal. Soporta implementaciones tanto regionales como entre regiones.
+
 * ¿Cuál es el propósito del *Backend Pool*?
+
+/RTA
+El backend pool tiene como finalidad agrupar recursos que atienden las solicitudes de los usuarios. Este conjunto se utiliza comúnmente para escalar el rendimiento de aplicaciones web o APIs, y también para mejorar su disponibilidad. Si uno de los recursos falla, otro dentro del grupo puede asumir su función, asegurando así la continuidad del servicio. Además, permite que la aplicación escale automáticamente según la demanda.
+
 * ¿Cuál es el propósito del *Health Probe*?
+
+/RTA
+El propósito de un Health Probe es monitorear el estado de los servicios para asegurar su disponibilidad y correcto funcionamiento. En sistemas distribuidos, envía solicitudes a las instancias de backend y evalúa sus respuestas. Si una instancia no responde adecuadamente, el balanceador de carga puede dejar de dirigirle tráfico de forma temporal, lo que contribuye a una escalabilidad eficiente y mejora el rendimiento del sistema.
+
 * ¿Cuál es el propósito de la *Load Balancing Rule*? ¿Qué tipos de sesión persistente existen, por qué esto es importante y cómo puede afectar la escalabilidad del sistema?.
+
+/RTA
+La función de la regla de balanceo de carga (Load Balancing Rule) es definir cómo se reparten las solicitudes de los usuarios entre los recursos disponibles en un backend pool. Estas reglas son clave para optimizar el rendimiento, garantizar la disponibilidad y fortalecer la seguridad de aplicaciones web y APIs.
+
 * ¿Qué es una *Virtual Network*? ¿Qué es una *Subnet*? ¿Para qué sirven los *address space* y *address range*?
+
+/RTA
+Azure Virtual Network (VNet) permite la comunicación segura entre diversos recursos de Azure, como máquinas virtuales, así como con Internet y redes locales. Esta red proporciona una conexión directa mediante la infraestructura troncal de Azure, asegurando un enrutamiento eficiente. Los recursos pueden implementarse directamente en una VNet o vincularse a ella usando puntos de conexión privados o de servicio.
+
+Una subred (subnet) es una partición lógica dentro de una red IP, utilizada para segmentar la red en bloques más pequeños. Esto facilita una mejor organización, gestión, seguridad y rendimiento de la red.
+
+El espacio de direcciones (address space) define el conjunto de direcciones IP disponibles dentro de una red, las cuales se agrupan en bloques llamados subredes.
+
+El rango de direcciones (address range) es una porción específica del espacio de direcciones, utilizada para asignar IPs individuales a los dispositivos dentro de la red.
+
 * ¿Qué son las *Availability Zone* y por qué seleccionamos 3 diferentes zonas?. ¿Qué significa que una IP sea *zone-redundant*?
+
+/RTA
+En Azure, una Availability Zone (AZ) es un centro de datos físico y aislado dentro de una misma región, cada uno con su propia energía, refrigeración y red independientes. Esta separación garantiza que si una zona presenta fallos, las otras continúen operando con normalidad.
+
+Distribuir los recursos en tres zonas de disponibilidad distintas aumenta la tolerancia a fallos, ya que si una zona falla, los servicios en las otras dos seguirán funcionando, lo que mejora la continuidad y disponibilidad del servicio.
+
+Una IP zone-redundant en Azure es una dirección IP que está operativa en varias zonas de disponibilidad dentro de una región. Esto significa que, en caso de una interrupción en una zona, la IP continúa accesible desde otras zonas.
+
+Estas IPs son clave para lograr alta disponibilidad, ya que permiten mantener en línea las aplicaciones y servicios incluso cuando una zona presenta problemas.
+
 * ¿Cuál es el propósito del *Network Security Group*?
+
+/RTA
+En Azure, un Network Security Group (NSG) es un grupo de reglas de seguridad que se aplican a una subred de Azure. Las reglas de NSG controlan el tráfico de red que puede entrar y salir de la subred.
+
+Los NSG son una herramienta importante para la seguridad de la red en Azure. Pueden ayudar a proteger los recursos de Azure de ataques de red, como el tráfico malicioso o el tráfico no autorizado.
+
 * Informe de newman 1 (Punto 2)
 * Presente el Diagrama de Despliegue de la solución.
 
