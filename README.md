@@ -3,6 +3,8 @@
 
 ## Escalamiento en Azure con Maquinas Virtuales, Sacale Sets y Service Plans
 
+# Integrantes: Juan Cancelado y Diego Chicuazuque
+
 ### Dependencias
 * Cree una cuenta gratuita dentro de Azure. Para hacerlo puede guiarse de esta [documentación](https://azure.microsoft.com/es-es/free/students/). Al hacerlo usted contará con $100 USD para gastar durante 12 meses.
 
@@ -68,9 +70,14 @@ hicimos el comando npm install
 
     ` node FibonacciApp.js`
 
+
 6. Antes de verificar si el endpoint funciona, en Azure vaya a la sección de *Networking* y cree una *Inbound port rule* tal como se muestra en la imágen. Para verificar que la aplicación funciona, use un browser y user el endpoint `http://xxx.xxx.xxx.xxx:3000/fibonacci/6`. La respuesta debe ser `The answer is 8`.
 
 ![](images/part1/part1-vm-3000InboudRule.png)
+
+probamos el resultado en nuestro navegador:
+
+![](images/part1/7.png)
 
 7. La función que calcula en enésimo número de la secuencia de Fibonacci está muy mal construido y consume bastante CPU para obtener la respuesta. Usando la consola del Browser documente los tiempos de respuesta para dicho endpoint usando los siguintes valores:
     * 1000000
@@ -84,9 +91,22 @@ hicimos el comando npm install
     * 1080000
     * 1090000    
 
+Probando los resultados:
+
+![](images/part1/8.png)
+
+![](images/part1/9.png)
+
+![](images/part1/10.png)
+
+
 8. Dírijase ahora a Azure y verifique el consumo de CPU para la VM. (Los resultados pueden tardar 5 minutos en aparecer).
 
 ![Imágen 2](images/part1/part1-vm-cpu.png)
+
+Resultados:
+
+![](images/part1/11.png)
 
 9. Ahora usaremos Postman para simular una carga concurrente a nuestro sistema. Siga estos pasos.
     * Instale newman con el comando `npm install newman -g`. Para conocer más de Newman consulte el siguiente [enlace](https://learning.getpostman.com/docs/postman/collection-runs/command-line-integration-with-newman/).
@@ -99,29 +119,122 @@ hicimos el comando npm install
     newman run ARSW_LOAD-BALANCING_AZURE.postman_collection.json -e [ARSW_LOAD-BALANCING_AZURE].postman_environment.json -n 10
     ```
 
+Cambios:
+
+![](images/part1/13.png)
+
+
+
 10. La cantidad de CPU consumida es bastante grande y un conjunto considerable de peticiones concurrentes pueden hacer fallar nuestro servicio. Para solucionarlo usaremos una estrategia de Escalamiento Vertical. En Azure diríjase a la sección *size* y a continuación seleccione el tamaño `B2ms`.
 
 ![Imágen 3](images/part1/part1-vm-resize.png)
 
+Resultados:
+
+![](images/part1/15.png)
+
+![](images/part1/16.png)
+
+tamaño:
+
+![](images/part1/tamaño.png)
+
 11. Una vez el cambio se vea reflejado, repita el paso 7, 8 y 9.
+
+![](images/part1/Despues.png)
+
 12. Evalue el escenario de calidad asociado al requerimiento no funcional de escalabilidad y concluya si usando este modelo de escalabilidad logramos cumplirlo.
+
+/RTA
+Sí, porque al incrementar el tamaño de la máquina virtual, también se incrementan los recursos como la CPU y la memoria RAM, lo que permite que la aplicación atienda más solicitudes en un menor tiempo.
+
 13. Vuelva a dejar la VM en el tamaño inicial para evitar cobros adicionales.
 
 **Preguntas**
 
 1. ¿Cuántos y cuáles recursos crea Azure junto con la VM?
+
+/RTA
+
+![](images/part1/pregunta1.png)
+
 2. ¿Brevemente describa para qué sirve cada recurso?
+/RTA
+Dirección IP pública: Este tipo de dirección permite que los recursos en Azure se conecten tanto con Internet como con servicios públicos de Azure. La dirección permanece asignada al recurso (como una máquina virtual) hasta que se libera.
+
+Grupo de seguridad de red: En Azure, puedes utilizar un grupo de seguridad de red para controlar el tráfico que entra y sale de los recursos dentro de una red virtual. Estos grupos incluyen reglas que permiten o bloquean el tráfico según parámetros como el origen, el destino, el puerto y el protocolo.
+
+Red Virtual (Virtual Network):
+Una Red Virtual en Azure es la base de una red privada dentro de la nube. Permite que diferentes recursos, como máquinas virtuales, se comuniquen de manera segura entre ellos, con Internet y con redes locales. Funciona de forma similar a una red tradicional en un centro de datos propio, pero con las ventajas de Azure, como escalabilidad, alta disponibilidad y aislamiento.
+
+Interfaz de Red (Network Interface):
+La interfaz de red (NIC) es el componente que permite a una máquina virtual conectarse con otros recursos en Azure, con redes locales y con Internet. Cuando se crea una VM desde el portal de Azure, se le asigna automáticamente una NIC con configuraciones predeterminadas.
+
+Clave SSH (SSH Key):
+Las claves SSH se utilizan para establecer conexiones seguras con las máquinas virtuales en Azure, especialmente desde sistemas tipo Unix/Linux.
+
+Disco (Disk):
+Los discos administrados en Azure son volúmenes virtuales que funcionan como discos físicos, pero están gestionados por la plataforma. Se usan con máquinas virtuales y solo necesitas definir el tamaño y tipo del disco al crearlo; Azure se encarga de su gestión.
+
+
 3. ¿Al cerrar la conexión ssh con la VM, por qué se cae la aplicación que ejecutamos con el comando `npm FibonacciApp.js`? ¿Por qué debemos crear un *Inbound port rule* antes de acceder al servicio?
+
+/RTA
+
+El comando npm FibonacciApp.js ejecuta un proceso que requiere una conexión activa para mantenerse en funcionamiento. Si la conexión se interrumpe, la aplicación se detiene automáticamente.
+
+Es necesario crear una regla de entrada (Inbound port rule) para habilitar el acceso al puerto 3000, ya que Azure, por defecto, bloquea el tráfico entrante en todos los puertos. Esta regla es esencial para permitir que la aplicación reciba solicitudes y funcione correctamente.
+
 4. Adjunte tabla de tiempos e interprete por qué la función tarda tando tiempo.
+
+Antes:
+ 
+![](images/part1/tabla-antes.png)
+
+Despues:
+
+![](images/part1/Despues.png)
+
+
 5. Adjunte imágen del consumo de CPU de la VM e interprete por qué la función consume esa cantidad de CPU.
+
+Antes:
+
+![](images/part1/12.png)
+
+Despues:
+
+![](images/part1/16.png)
+
 6. Adjunte la imagen del resumen de la ejecución de Postman. Interprete:
     * Tiempos de ejecución de cada petición.
     * Si hubo fallos documentelos y explique.
 7. ¿Cuál es la diferencia entre los tamaños `B2ms` y `B1ls` (no solo busque especificaciones de infraestructura)?
 8. ¿Aumentar el tamaño de la VM es una buena solución en este escenario?, ¿Qué pasa con la FibonacciApp cuando cambiamos el tamaño de la VM?
+
+/RTA
+
+No, aumentar el tamaño de la máquina virtual no es una solución escalable, ya que si las solicitudes continúan incrementándose, la VM seguirá teniendo limitaciones y volverá a presentarse un alto consumo de CPU.
+
+Además, al modificar el tamaño de la VM, esta se reinicia, lo que interrumpe la aplicación y obliga a volver a ejecutarla.
+
 9. ¿Qué pasa con la infraestructura cuando cambia el tamaño de la VM? ¿Qué efectos negativos implica?
+
+/RTA
+
+Al cambiar el tamaño de la VM, se debe reiniciar la máquina, por lo que se pierde la conexión ssh y la aplicación deja de funcionar.
+
 10. ¿Hubo mejora en el consumo de CPU o en los tiempos de respuesta? Si/No ¿Por qué?
+
+/RTA
+
+Sí, ya que al escalar la máquina virtual a un tamaño mayor, se incrementan los recursos disponibles como la CPU y la memoria RAM, lo que permite a la aplicación manejar un mayor número de solicitudes con mayor eficiencia.
+
 11. Aumente la cantidad de ejecuciones paralelas del comando de postman a `4`. ¿El comportamiento del sistema es porcentualmente mejor?
+
+/RTA
+
+El comportamiento es porcentualmente mejor porque se pueden procesar más peticiones en menos tiempo.
 
 ### Parte 2 - Escalabilidad horizontal
 
