@@ -42,14 +42,14 @@ maquina realizada:
 
 En este paso tocaba conectarnos a la maquina virtual:
 
-![](images/part1/4.png)
+![](images/part1/4.1.png)
 
 
 3. Instale node, para ello siga la sección *Installing Node.js and npm using NVM* que encontrará en este [enlace](https://linuxize.com/post/how-to-install-node-js-on-ubuntu-18.04/).
 
 En este paso instalamos npm:
 
-![](images/part1/5.png)
+![](images/part1/5.1.png)
 
 4. Para instalar la aplicación adjunta al Laboratorio, suba la carpeta `FibonacciApp` a un repositorio al cual tenga acceso y ejecute estos comandos dentro de la VM:
 
@@ -59,6 +59,10 @@ En este paso instalamos npm:
 
     `npm install`
 
+
+hicimos el comando npm install
+
+![](images/part1/5.png)
 
 5. Para ejecutar la aplicación puede usar el comando `npm FibinacciApp.js`, sin embargo una vez pierda la conexión ssh la aplicación dejará de funcionar. Para evitar ese compartamiento usaremos *forever*. Ejecute los siguientes comando dentro de la VM.
 
