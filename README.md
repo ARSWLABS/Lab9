@@ -250,6 +250,10 @@ Creacion del recuros:
 
 ![](images/part2/parte2-1.png)
 
+![](images/part2/parte2_1.1.png)
+
+![](images/part2/parte2_1.2.png)
+
 2. A continuación cree un *Backend Pool*, guiese con la siguiente imágen.
 
 ![](images/part2/part2-lb-bp-create.png)
@@ -282,6 +286,9 @@ VIRTUAL NETWORK:
 
 ![](images/part2/parte2-5.png)
 
+![](images/part2/parte2-5.1.png)
+
+![](images/part2/parte2-5.2.png)
 #### Crear las maquinas virtuales (Nodos)
 
 Ahora vamos a crear 3 VMs (VM1, VM2 y VM3) con direcciones IP públicas standar en 3 diferentes zonas de disponibilidad. Después las agregaremos al balanceador de carga.
@@ -290,23 +297,33 @@ Ahora vamos a crear 3 VMs (VM1, VM2 y VM3) con direcciones IP públicas standar 
 
 ![](images/part2/part2-vm-create1.png)
 
+Resultado:
+
+![](images/part2/parte2-6.png)
+
 2. En la configuración de networking, verifique que se ha seleccionado la *Virtual Network*  y la *Subnet* creadas anteriormente. Adicionalmente asigne una IP pública y no olvide habilitar la redundancia de zona.
 
 ![](images/part2/part2-vm-create2.png)
+
+Resultado:
+
+![](images/part2/parte2-6.1.png)
 
 3. Para el Network Security Group seleccione "avanzado" y realice la siguiente configuración. No olvide crear un *Inbound Rule*, en el cual habilite el tráfico por el puerto 3000. Cuando cree la VM2 y la VM3, no necesita volver a crear el *Network Security Group*, sino que puede seleccionar el anteriormente creado.
 
 ![](images/part2/part2-vm-create3.png)
 
-VM1
+Resultado:
 
-![](images/part2/parte2-6.png)
+![](images/part2/parte2-6.2.png)
+
+![](images/part2/parte2-6.3.png)
 
 4. Ahora asignaremos esta VM a nuestro balanceador de carga, para ello siga la configuración de la siguiente imágen.
 
 ![](images/part2/part2-vm-create4.png)
 
-RESULTADO:
+Resultado:
 
 ![](images/part2/parte2-7.png)
 
@@ -325,6 +342,10 @@ npm install
 npm install forever -g
 forever start FibonacciApp.js
 ```
+
+Resultado:
+
+![](images/part2/parte2-8.png)
 
 Realice este proceso para las 3 VMs, por ahora lo haremos a mano una por una, sin embargo es importante que usted sepa que existen herramientas para aumatizar este proceso, entre ellas encontramos Azure Resource Manager, OsDisk Images, Terraform con Vagrant y Paker, Puppet, Ansible entre otras.
 
